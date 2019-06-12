@@ -1,6 +1,6 @@
-function DeleteVehicle(vehicle)
-    SetEntityAsMissionEntity(vehicle, true, true)
-    Citizen.InvokeNative(0xEA386986E786A54F, Citizen.PointerValueIntInitialized(vehicle))
+function DeleteVehicle(veh_entity)
+    SetEntityAsMissionEntity(veh_entity, true, true)
+    Citizen.InvokeNative(0xEA386986E786A54F, Citizen.PointerValueIntInitialized(veh_entity))
 end
 
 function PromptUserTextInput()

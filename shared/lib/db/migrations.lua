@@ -7,17 +7,6 @@ function Migrations.CreateMigrationTable()
                     "PRIMARY KEY (`id`));")
 end
 
-function Migrations.RegisterPluginMigration(pluginName)
-    local currentRevision = Migrations.GetActivePluginMigrationVersion(pluginName)
-    if currentRevision == nil then
-        MySQL.Sync.execute(
-                "INSERT INTO " .. _TableNames.Migrations .. " (plugin_name, revision) VALUES (@pluginName, @revision)",
-                { ["@pluginName"] = pluginName, ["@revision"] = 0 })
-    end
-
-    return true
-end
-
 function Migrations.GetActivePluginMigrationVersion(pluginName)
     local rows = MySQL.Sync.fetchAll(
             "SELECT revision FROM " .. _TableNames.Migrations .. " WHERE plugin_name = @pluginName LIMIT 1",
@@ -28,6 +17,17 @@ function Migrations.GetActivePluginMigrationVersion(pluginName)
             return tonumber(row.revision)
         end
     end
+end
+
+function Migrations.RegisterPluginMigration(pluginName)
+    local currentRevision = Migrations.GetActivePluginMigrationVersion(pluginName)
+    if currentRevision == nil then
+        MySQL.Sync.execute(
+                "INSERT INTO " .. _TableNames.Migrations .. " (plugin_name, revision) VALUES (@pluginName, @revision)",
+                { ["@pluginName"] = pluginName, ["@revision"] = 0 })
+    end
+
+    return true
 end
 
 function Migrations.RegisterPluginMigrationRevision(pluginName, id, query)

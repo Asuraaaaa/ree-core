@@ -8,8 +8,7 @@ function PedRemoveHeldWeapon(ped)
     end
 end
 
-function PedSpawnInVehicle(ped, vehicleName, x, y, z)
-    local model          = vehicleName
+function PedSpawnInVehicle(ped, model, x, y, z)
     local pedCoords      = GetEntityCoords(ped, false)
     local heading        = GetEntityHeading(ped)
 
